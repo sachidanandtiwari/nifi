@@ -1,0 +1,29 @@
+FROM            centos:centos7
+
+MAINTAINER      Sachin Tiwari <stiwari@luxoft.com>
+
+ENV             DIST_MIRROR             http://mirror.cc.columbia.edu/pub/software/apache/nifi
+ENV             NIFI_CLUSTER_HOME       /opt/nifi/cluster
+ENV             VERSION                 0.7.0
+ENV             DISABLE_SSL             true
+ENV             DISABLE_LDAP            true
+ENV				NIFI_NODE1_HOME			/opt/nifi/node1
+
+# Install necessary packages, create target directory, download and extract, and update the banner to let people know what version they are using
+RUN             yum install -y java-1.8.0-openjdk tar && \
+                mkdir -p /opt/nifi/cluster && \
+                curl ${DIST_MIRROR}/${VERSION}/nifi-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_CLUSTER_HOME} --strip-components=1 && \
+                sed -i -e "s|^nifi.ui.banner.text=.*$|nifi.ui.banner.text=Docker Manager NiFi ${VERSION}|" ${NIFI_CLUSTER_HOME}/conf/nifi.properties
+				
+RUN             yum install -y java-1.8.0-openjdk tar && \
+                mkdir -p /opt/nifi/node1 && \
+                curl ${DIST_MIRROR}/${VERSION}/nifi-${VERSION}-bin.tar.gz | tar xvz -C ${NIFI_NODE1_HOME} --strip-components=1 && \
+                sed -i -e "s|^nifi.ui.banner.text=.*$|nifi.ui.banner.text=Docker Node 1 NiFi ${VERSION}|" ${NIFI_NODE1_HOME}/conf/nifi.properties
+
+# Expose web port
+EXPOSE          80 443
+VOLUME          ["/opt/certs", "${NIFI_CLUSTER_HOME}/flowfile_repository", "${NIFI_CLUSTER_HOME}/database_repository", "${NIFI_CLUSTER_HOME}/content_repository", "${NIFI_CLUSTER_HOME}/provenance_repository"]
+VOLUME			["/opt/certs", "${NIFI_NODE1_HOME}/flowfile_repository", "${NIFI_NODE1_HOME}/database_repository", "${NIFI_NODE1_HOME}/content_repository", "${NIFI_NODE1_HOME}/provenance_repository"]
+ADD             scripts/ /opt/nifi/cluster/sh
+ADD				scripts/ /opt/nifi/node1/sh
+CMD             ["/opt/sh/start.sh"]
