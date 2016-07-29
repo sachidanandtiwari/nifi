@@ -16,8 +16,8 @@ RUN             yum install -y java-1.8.0-openjdk tar && \
 
 # Expose web port
 EXPOSE          80 443
-VOLUME          ["/opt/certs", "${NIFI_HOME}/flowfile_repository", "${NIFI_HOME}/database_repository", "${NIFI_HOME}/content_repository", "${NIFI_HOME}/provenance_repository"]
+VOLUME          ["/opt/certs","/opt/sh", "${NIFI_HOME}/flowfile_repository", "${NIFI_HOME}/database_repository", "${NIFI_HOME}/content_repository", "${NIFI_HOME}/provenance_repository"]
 
-ADD             ./scripts/ /opt/sh/
-RUN             chmod +rwx /opt/sh/start.sh
+ADD             ./scripts/ /opt/sh
+RUN             chmod +x /opt/sh/start.sh
 CMD             ["/opt/sh/start.sh"]
