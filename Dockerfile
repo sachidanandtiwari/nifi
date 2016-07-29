@@ -18,5 +18,5 @@ RUN             yum install -y java-1.8.0-openjdk tar && \
 EXPOSE          80 443
 VOLUME          ["/opt/certs", "${NIFI_HOME}/flowfile_repository", "${NIFI_HOME}/database_repository", "${NIFI_HOME}/content_repository", "${NIFI_HOME}/provenance_repository"]
 
-ADD             scripts/ /opt/sh
+ADD             scripts/ /opt/sh/
 CMD             ["/opt/sh/start.sh"]
