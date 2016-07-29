@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # NIFI_HOME is defined by an ENV command in the backing Dockerfile
 nifi_props_file=${NIFI_HOME}/conf/nifi.properties
