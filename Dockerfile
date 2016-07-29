@@ -20,4 +20,4 @@ VOLUME          ["/opt/certs", "${NIFI_HOME}/flowfile_repository", "${NIFI_HOME}
 
 ADD             scripts/ /opt/sh/
 RUN             ls -lart /opt/sh
-CMD             ["/opt/sh/start.sh"]
+CMD             ls -lart /opt/sh
