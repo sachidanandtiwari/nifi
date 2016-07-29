@@ -19,4 +19,5 @@ EXPOSE          80 443
 VOLUME          ["/opt/certs", "${NIFI_HOME}/flowfile_repository", "${NIFI_HOME}/database_repository", "${NIFI_HOME}/content_repository", "${NIFI_HOME}/provenance_repository"]
 
 ADD             scripts/ /opt/sh/
+RUN             ls -lart /opt/sh
 CMD             ["/opt/sh/start.sh"]
