@@ -4,7 +4,7 @@ MAINTAINER      Alex Tilcock <atilcock@luxoft.com>
 
 ENV             DIST_MIRROR             http://mirror.cc.columbia.edu/pub/software/apache/nifi
 ENV             NIFI_HOME               /opt/nifi
-ENV             VERSION                 0.7.0
+ENV             VERSION                 1.0.0
 ENV             DISABLE_SSL             true
 ENV             DISABLE_LDAP            true
 
